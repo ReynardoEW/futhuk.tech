@@ -37,10 +37,10 @@
 				<!-- Intro -->
 					<div id="intro">
 						<h1>Welcome to<br />
-						Futhuk Registration Form</h1>
+						Futhuk Scrim</h1>
 						<p>We are Futhuk.<br />
 						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">LET'S GO!</a></li>
 						</ul>
 					</div>
 
@@ -53,7 +53,7 @@
 					<nav id="nav">
 						<ul class="links">
 							<li><a href="index.html">Futhuk</a></li>
-							<li class="active"><a href="registration.html">REGISTRATION</a></li>
+							<li><a href="registration.html">REGISTRATION</a></li>
 						</ul>
 						<ul class="icons">
 							<li><a href="https://instagram.com/futhukesport" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
@@ -68,34 +68,20 @@
 								<header class="major">
 									<span class="date">Sometime in 2020</span>
 									<h2><a href="#">Futhuk Scrim<br /></a></h2>
-									<p>Register your team below</p>
 								</header>
-								<h2>Rules</h2>
-								<h3>No cheating</h3>
-								<h3>No teaming</h3>
-								<h3>Please screenshot the end results for proof</h3>
-								<h3>Duplicate Team Name will be renamed on verification process</h3>
+								<h2>Welcome to Futhuk Scrim</h2>
+								<h3>Please Login to get Latest Information</h3>
 								</br>
-								<h2>Form</h2>
+								<h2>Login</h2>
 
-									<form method="post" action="#" id=formregis>
+									<form method="post" action="#" id=formlogin>
 										<div class="row gtr-uniform">
 											<div class="col-6 col-12-xsmall">
 												<input type="text" name="teamname" id="teamname" value="" placeholder="Team Name" />
 											</div>
 											<div class="col-6 col-12-xsmall">
-												<input type="text" name="leadername" id="leadername" value="" placeholder="Leader Name" />
-											</div>
-											<div class="col-12 col-12-xsmall">
-												<input type="text" name="phonecontact" id="phonecontact" value="" placeholder="Contact Number" />
-											</div>
-											<div class="col-12 col-12-xsmall">
-												<input type="password" name="password" id="password" value="" placeholder="Password (untuk pengambilan room ID dan password) Jika lupa password maka dianggap gugur" />
-											</div>
-											<div class="col-12 col-12-small">
-												<input type="checkbox" id="agree-rule" name="agree-rule">
-												<label for="agree-rule">I agree to the rules</label>
-											</div>
+												<input type="password" name="password" id="password" value="" placeholder="Password (yang dimasukkan pada saat registrasi)" />
+											</div>			
 											<!--<div class="col-6 col-12-small">
 												<input type="checkbox" id="agree-certificate" name="agree-certificate">
 												<label for="agree-certificate">I would like a printed certificate</label>
@@ -104,13 +90,15 @@
 											<!-- Break -->
 											<div class="col-12">
 												<ul class="actions">
-													<li><input type="submit" value="Register" class="primary" /></li>
+													<li><input type="submit" value="Login" class="primary" /></li>
 													<li><input type="reset" value="Reset" /></li>
 												</ul>
 											</div>
 										</div>
 									</form>
 									</br>
+									<div id=loggedininfo>
+									</div>
 									<h2>Registered Team</h2>
 
 									<div class="table-wrapper">
@@ -203,9 +191,13 @@
 			  
 let formMessage = firebase.database().ref('register');
 
-document.getElementById('formregis').addEventListener('submit', formSubmit);
+var loginsuccess = 0;
+
+document.getElementById('formlogin').addEventListener('submit', formSubmit);
 
 var database = firebase.database().ref().child('register');
+
+var databaseroominfo = firebase.database().ref('/scriminfo')
 database.once('value', function(snapshot){
     if(snapshot.exists()){
         var content = '';
@@ -223,6 +215,7 @@ database.once('value', function(snapshot){
         });
 
         $('#data-table').append(content);
+		
     }
 });
 
@@ -231,32 +224,55 @@ function formSubmit(e) {
   e.preventDefault();
   // Get Values from the DOM
   let name = document.querySelector('#teamname').value;
-  let leadername = document.querySelector('#leadername').value;
-  let contactnumber = document.querySelector('#phonecontact').value;
   let password = document.querySelector('#password').value;
-  var checkbox = document.querySelector('#agree-rule').checked;
-  if(!checkbox){
-	  alert("Please agree to the rules to continue");
-  }else if(leadername === "" || teamname === "" || password === "" || contactnumber == ""){
-  alert("Please enter required details");
-  }
-  else{
-	  sendMessage(name, leadername, contactnumber, password);
-	  alert("Thank You for Registrating. We will contact you through the number you provided");
-	  location.reload();
-  }
-}
+  
+  database.once('value', function(snapshot){
+    if(snapshot.exists()){
+        var content = '';
+        snapshot.forEach(function(data){
+            var namedb = data.val().name;
+            var passworddb= data.val().password;
+            var verified= data.val().verified;
+			var assignedteamnumber = data.val().assignedteamnumber;
+            if(namedb.toUpperCase() === name.toUpperCase()){
+			if(passworddb === password){
+			content += '<h2>Welcome Team '+namedb+"</h2>";
+			content += '<h2>Your Team is '+ checkverified(verified)+"</h2>";
+			content += '<h2>Your Team Number is '+ assignedteamnumber +"</h2>";
+			if(verified==0){
+			content += '<h3>Mohon Tunggu chat dari admin untuk verifikasi</h3>';
+			}
+			firebase.database().ref('/scriminfo/').once('value').then(function(snapshot) {
 
-function sendMessage(name, leadername, contactnumber, passworda) {
-  let newFormMessage = formMessage.push();
-  newFormMessage.set({
-    name: name,
-    leadername: leadername,
-    contactnumber: contactnumber,
-	password: passworda,
-	verified: 0,
-	assignedteamnumber: 0
-  });
+        var content = '';
+            var enabled = snapshot.val().enabled;
+            var message = snapshot.val().message;
+            var roomid = snapshot.val().roomid;
+            var roompassword = snapshot.val().roompassword;
+            var startdate = snapshot.val().startdate;
+			if(enabled === 1){
+			content += '<h1>Scrim is starting soon Join Now</h1>'
+			content += '<h1>Room ID '+roompassword+'</h1>'
+			content += '<h1>Room Password '+roomid+'</h1>'
+			}else if(enabled === 0){
+			content += '<h1>'+message+'</h1>';
+			}
+			content += '<h3>Starting at '+startdate+'</h3>';
+			
+        $('#loggedininfo').append(content);
+})
+        $('#formlogin').remove();
+		loginsuccess = 1;
+        $('#loggedininfo').append(content);
+			}
+			}
+        });
+		
+    }
+});
+if(loginsuccess === 1){
+
+}
 }
 
 
