@@ -46,7 +46,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo">FUTHUK</a>
+						<a href="index.html" class="logo">LET'S GO!</a>
 					</header>
 
 				<!-- Nav -->
@@ -54,6 +54,7 @@
 						<ul class="links">
 							<li><a href="index.html">Futhuk</a></li>
 							<li><a href="registration.html">REGISTRATION</a></li>
+							<li class="active"><a href="scrim.html">Scrim</a></li>
 						</ul>
 						<ul class="icons">
 							<li><a href="https://instagram.com/futhukesport" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
@@ -248,12 +249,14 @@ function formSubmit(e) {
             var enabled = snapshot.val().enabled;
             var message = snapshot.val().message;
             var roomid = snapshot.val().roomid;
-            var roompassword = snapshot.val().roompassword;
+            var roompassword = snapshot.val().roompassword;			
+            var mapname = snapshot.val().map;
             var startdate = snapshot.val().startdate;
 			if(enabled === 1){
 			content += '<h1>Scrim is starting soon Join Now</h1>'
 			content += '<h1>Room ID '+roompassword+'</h1>'
 			content += '<h1>Room Password '+roomid+'</h1>'
+			content += '<h1>Map '+mapname+'</h1>'
 			}else if(enabled === 0){
 			content += '<h1>'+message+'</h1>';
 			}
