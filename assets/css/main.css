@@ -3049,7 +3049,7 @@ input, select, textarea {
 		table tfoot {
 			border-top: solid 2px;
 		}
-
+		
 		table.alt {
 			border-collapse: separate;
 		}
