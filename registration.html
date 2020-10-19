@@ -96,8 +96,9 @@
 								<h2>Rules</h2>
 								<h3>No cheating</h3>
 								<h3>No teaming</h3>
-								<h3>Please screenshot the end results for proof</h3>
-								<h3>Duplicate Team Name will be renamed on verification process</h3>
+								<h3>Mohon screenshot hasil akhir berserta damage agar kami dapat memproses rank dan sertifikat</h3>
+								<h3>Mohon untuk tidak mengisi nama tim dengan nama tim yang telah ada, Nama Tim yang sama akan ditanyakan pada proses verifikasi</h3>
+								<h3>Password yang di isi adalah password yang dibuat oleh anda untuk login di website ini dan bukan password PUBG anda jadi data anda tetap aman</h3>
 								</br>
 								<h2>Form</h2>
 
@@ -115,9 +116,10 @@
 											<div class="col-12 col-12-xsmall">
 												<input type="password" name="password" id="password" value="" placeholder="Password (untuk pengambilan room ID dan password) Jika lupa password maka dianggap gugur" />
 											</div>
+
 											<div class="col-12 col-12-small">
 												<input type="checkbox" id="agree-rule" name="agree-rule">
-												<label for="agree-rule">I agree to the rules</label>
+												<label for="agree-rule">Saya setuju dengan rules yang ada dan siap melaksanakan rules</label>
 											</div>
 											<!--<div class="col-6 col-12-small">
 												<input type="checkbox" id="agree-certificate" name="agree-certificate">
@@ -259,13 +261,13 @@ function formSubmit(e) {
   let password = document.querySelector('#password').value;
   var checkbox = document.querySelector('#agree-rule').checked;
   if(!checkbox){
-	  alert("Please agree to the rules to continue");
+	  alert("Mohon accept rules untuk mendaftar");
   }else if(leadername === "" || teamname === "" || password === "" || contactnumber == ""){
-  alert("Please enter required details");
+  alert("Mohon isi semua data yang diperlukan");
   }
   else{
 	  sendMessage(name, leadername, contactnumber, password);
-	  alert("Thank You for Registrating. We will contact you through the number you provided");
+	  alert("Data registrasi di terima. Kami akan segera mengontak anda di nomor yang telah di isi");
 	  location.reload();
   }
 }
