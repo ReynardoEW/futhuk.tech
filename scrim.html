@@ -27,7 +27,7 @@
 <meta name="theme-color" content="#ffffff">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		
+
 		<!-- Primary Meta Tags -->
 <title>Futhuk</title>
 <meta name="title" content="Futhuk">
@@ -123,6 +123,7 @@
 									</br>
 									<div id=loggedininfo>
 									</div>
+									
 									<h2>Registered Team</h2>
 
 									<div class="table-wrapper">
@@ -194,6 +195,8 @@
 				 https://firebase.google.com/docs/web/setup#available-libraries -->
 			<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
 			  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+			  
+			  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
 
 
 			<script>
@@ -218,6 +221,9 @@ let formMessage = firebase.database().ref('register');
 var loginsuccess = 0;
 
 document.getElementById('formlogin').addEventListener('submit', formSubmit);
+
+
+var storageRef = firebase.storage().ref();
 
 var database = firebase.database().ref().child('register');
 
@@ -284,6 +290,11 @@ function formSubmit(e) {
 			content += '<h1>'+message+'</h1>';
 			}
 			content += '<h3>Starting at '+startdate+'</h3>';
+			if(enabled === 2){
+			content += '<h3>That\'s a WRAP Please upload match results below so we can process it and give you the certificate</h3>'
+			content += window.atob('PGxhYmVsIGZvcj0iZmlsZS1tYXRjaDEiIGNsYXNzPSJjdXN0b20tZmlsZS11cGxvYWQiPgogICAgVXBsb2FkIDFzdCBNYXRjaCBSZXN1bHQKPC9sYWJlbD4KPGlucHV0IGlkPSJmaWxlLW1hdGNoMSIgdHlwZT0iZmlsZSIvIGFjY2VwdD0iaW1hZ2UvKiIgb25jaGFuZ2U9InNlbmRNYXRjaEEodGhpcykiPgo8bGFiZWwgZm9yPSJmaWxlLW1hdGNoMiIgY2xhc3M9ImN1c3RvbS1maWxlLXVwbG9hZCI+CiAgICBVcGxvYWQgMm5kIE1hdGNoIFJlc3VsdAo8L2xhYmVsPgo8aW5wdXQgaWQ9ImZpbGUtbWF0Y2gyIiB0eXBlPSJmaWxlIi8gYWNjZXB0PSJpbWFnZS8qIiBvbmNoYW5nZT0ic2VuZE1hdGNoQih0aGlzKSI+')
+			
+			}
 			
         $('#loggedininfo').append(content);
 })
@@ -310,6 +321,25 @@ return "Not Verified"
 else{
 return "Verified"
 }
+}
+
+function sendMatchA(fileA){
+	const selectedFilea = document.getElementById('file-match1').files[0];
+		var metadata = {
+  contentType: 'image/jpeg'
+};
+		storageRef.child('images1/'+new Date()+'/').put(selectedFilea).then(function(snapshot) {
+  console.log('Uploaded a blob or file!');
+});
+}
+function sendMatchB(fileB){
+	const selectedFilea = document.getElementById('file-match2').files[0];
+		var metadata = {
+  contentType: 'image/jpeg'
+};
+		storageRef.child('images2/'+new Date()+'/').put(selectedFilea).then(function(snapshot) {
+  console.log('Uploaded a blob or file!');
+});
 }
 			</script>
 
