@@ -292,8 +292,7 @@ function formSubmit(e) {
 			content += '<h3>Starting at '+startdate+'</h3>';
 			if(enabled === 2){
 			content += '<h3>That\'s a WRAP Please upload match results below so we can process it and give you the certificate</h3>'
-			content += window.atob('PGxhYmVsIGZvcj0iZmlsZS1tYXRjaDEiIGNsYXNzPSJjdXN0b20tZmlsZS11cGxvYWQiPgogICAgVXBsb2FkIDFzdCBNYXRjaCBSZXN1bHQKPC9sYWJlbD4KPGlucHV0IGlkPSJmaWxlLW1hdGNoMSIgdHlwZT0iZmlsZSIvIGFjY2VwdD0iaW1hZ2UvKiIgb25jaGFuZ2U9InNlbmRNYXRjaEEodGhpcykiPgo8bGFiZWwgZm9yPSJmaWxlLW1hdGNoMiIgY2xhc3M9ImN1c3RvbS1maWxlLXVwbG9hZCI+CiAgICBVcGxvYWQgMm5kIE1hdGNoIFJlc3VsdAo8L2xhYmVsPgo8aW5wdXQgaWQ9ImZpbGUtbWF0Y2gyIiB0eXBlPSJmaWxlIi8gYWNjZXB0PSJpbWFnZS8qIiBvbmNoYW5nZT0ic2VuZE1hdGNoQih0aGlzKSI+')
-			
+			content += window.atob('PGxhYmVsIGZvcj0iZmlsZS1tYXRjaDEiIGNsYXNzPSJjdXN0b20tZmlsZS11cGxvYWQiPgogICAgVXBsb2FkIDFzdCBNYXRjaCBSZXN1bHQKPC9sYWJlbD4KPGlucHV0IGlkPSJmaWxlLW1hdGNoMSIgdHlwZT0iZmlsZSIvIGFjY2VwdD0iaW1hZ2UvKiIgb25jaGFuZ2U9InNlbmRNYXRjaEEodGhpcykiPgo8bGFiZWwgZm9yPSJmaWxlLW1hdGNoMiIgY2xhc3M9ImN1c3RvbS1maWxlLXVwbG9hZCI+CiAgICBVcGxvYWQgMm5kIE1hdGNoIFJlc3VsdAo8L2xhYmVsPgo8aW5wdXQgaWQ9ImZpbGUtbWF0Y2gyIiB0eXBlPSJmaWxlIi8gYWNjZXB0PSJpbWFnZS8qIiBvbmNoYW5nZT0ic2VuZE1hdGNoQih0aGlzKSI+CjxsYWJlbCBmb3I9ImZpbGUtbWF0Y2gzIiBjbGFzcz0iY3VzdG9tLWZpbGUtdXBsb2FkIj4KICAgIFVwbG9hZCAzcmQgTWF0Y2ggUmVzdWx0CjwvbGFiZWw+CjxpbnB1dCBpZD0iZmlsZS1tYXRjaDMiIHR5cGU9ImZpbGUiLyBhY2NlcHQ9ImltYWdlLyoiIG9uY2hhbmdlPSJzZW5kTWF0Y2hjKHRoaXMpIj4=')
 			}
 			
         $('#loggedininfo').append(content);
@@ -338,6 +337,15 @@ function sendMatchB(fileB){
   contentType: 'image/jpeg'
 };
 		storageRef.child('images2/'+new Date()+'/').put(selectedFilea).then(function(snapshot) {
+  console.log('Uploaded a blob or file!');
+});
+}
+function sendMatchc(fileC){
+	const selectedFilea = document.getElementById('file-match3').files[0];
+		var metadata = {
+  contentType: 'image/jpeg'
+};
+		storageRef.child('images3/'+new Date()+'/').put(selectedFilea).then(function(snapshot) {
   console.log('Uploaded a blob or file!');
 });
 }
